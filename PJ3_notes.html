@@ -9,9 +9,7 @@
 <body>
     <script>
     //chapter 6
-
         //创建自定义对象方法
-
             //1.创建一个Object实例
             /*var person = new Object();
             person.name = 'lx';
@@ -104,6 +102,24 @@
             person1.friends.push('c');
             console.log(person1,person2);*/
 
+        //原型动态性
+            //可以随时为原型添加属性和方法，并立刻在实例中生效
+            /*function Person() {}
+            var friend = new Person();
+            Person.prototype.sayHi = function() {
+                alert("hi");
+            }
+            friend.sayHi(); //"hi"*/
+            //但如果用对象字面量语法重写原型，实例对象内部属性[[Proptype]]指针指向的是构造函数实例化时的原型对象
+            /*function Person() {}
+            var friend = new Person();
+            Person.prototype = {
+                sayHi: function() {
+                    alert("hi");
+                }
+            }
+            friend.sayHi(); //"friend.sayHi is not a function"*/
+            
         /*var book = {
             _year: 2018,
         };
@@ -146,16 +162,6 @@
         };
         var A1 = new AAA();
         alert(A1.constructor == AAA);*/  
-
-
-    //快捷键
-    //建立新目录 mkdir 目录名
-    //打开文件夹or文件 open ~/test
-    //寻找特定文件夹 find ~ -iname  "test" 
-    //寻找特定文件夹下文件 find ~/lx/ -iname "xx"
-    //终止命令 ctrl + c
-    //chrome 调出console command + option + j
-    //chrome 代码检查 command + option + j
 
     </script>
 </body>

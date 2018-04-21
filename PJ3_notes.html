@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //chapter 6
+
+        //创建自定义对象方法
+
+            //1.创建一个Object实例
+            /*var person = new Object();
+            person.name = 'lx';
+            person.age = 18;
+            person.sayName = function() {
+                alert(this.name);
+            };*/
+
+            //2.对象字面量
+            /*var person = {
+                name: 'lx',
+                age: 18,
+                sayName: function() {
+                    alert(this.name);
+                }
+            }*/
+
+            //缺点:使用同一个接口创建很多对象，代码重复。
+
+            //3.工厂模式
+            /*function createPerson(name,age) {
+                var person = new Object();
+                person.name = name;
+                person.age = age;
+                person.sayName = function() {
+                    alert(this.name);
+                }
+                return person;
+            }
+            var person1 = createPerson('lx1','18');
+            var person2 = createPerson('lx2','80');*/
+            //缺点:未解决对象识别问题(怎样知道对象的类型)
+
+            //4.构造函数模式
+            /*function Person(name,age) {
+                this.name = name,
+                this.age = age,
+                this.sayName = function() {
+                    alert(this.name);
+                }
+            }
+            var person1 = new Person('lx1','18');
+            var person2 = new Person('lx2','80');*/
+            //与工厂模式区别：没有显示创建对象；直接将属性和方法赋给this对象；没有return。
+            //new 过程：创建实例对象；this指向实例对象；执行构造函数(给新对象添属性)；返回实例对象。
+            //缺点：每个方法都要在实例上重新创建一遍 alert(person1.sayName == person2.sayName)//false;
+
+            //5.原型模式
+            /*function Person() {}
+            Person.prototype.name = 'lx';
+            Person.prototype.age = '18';
+            Person.prototype.friends = ['a','b'];
+            Person.prototype.sayName = function() {
+                alert(this.name);
+            };
+            var person1 = new Person();
+            var person2 = new Person();
+            alert(person1.sayName == person2.sayName)//true;*/
+            //缺点：不能像构造函数传参；原型中引用类型的属性也会被共享（修改person1.friends,person2.friends一起变）
+                //原型模式字面量语法
+                /*function Person() {}
+                Person.prototype = {
+                    name : 'lx',
+                    age : 18,
+                    sayName: function() {
+                        alert(this.name);
+                    }
+                }*/
+                //缺点：完全重写了默认的原型对象(开辟了新内存空间),constructor属性不再指向构造函数Person
+                //修改：
+                /*Person.prototype = {
+                    constructor: Person,
+                    ...
+                }*/
+
+            //6.组合使用构造函数和原型模式
+            /*function Person(name,age) {
+                this.name = name;
+                this.age = age;
+                this.friends = ['a','b'];
+            }
+            Person.prototype = {
+                constructor: Person,
+                sayName: function() {
+                    alert(this.name);
+                }
+            };
+            var person1 = new Person('lx',18);
+            var person2 = new Person('lx2',80);
+            person1.friends.push('c');
+            console.log(person1,person2);*/
+
+        /*var book = {
+            _year: 2018,
+        };
+        Object.defineProperty(book,"year",{
+            get:function() {
+                return this._year;
+            },
+            set: function(v) {
+                if (v>2018){
+                    this._year = v;
+                }
+            }
+        });
+        book._year = 2019;
+        alert(book.year);*/
+
+        /*function AAA () {
+        }
+        var A1 = new AAA();
+        AAA.prototype = {
+            age: 11,
+            name: 'dsa',
+            sayName: function() {
+                alert(this.name);
+            }
+        };
+        //var A1 = new AAA();
+        var A2 = new AAA();
+        A1.sayName();
+        //alert(A1.sayName == A2.sayName);*/
+
+        /*function AAA () {
+        }
+        AAA.prototype = {
+            age: 11,
+            name: 'dsa',
+            sayName: function() {
+            alert(this.name);
+        }
+        };
+        var A1 = new AAA();
+        alert(A1.constructor == AAA);*/  
+
+
+    //快捷键
+    //建立新目录 mkdir 目录名
+    //打开文件夹or文件 open ~/test
+    //寻找特定文件夹 find ~ -iname  "test" 
+    //寻找特定文件夹下文件 find ~/lx/ -iname "xx"
+    //终止命令 ctrl + c
+    //chrome 调出console command + option + j
+    //chrome 代码检查 command + option + j
+
+    </script>
+</body>
+</html>

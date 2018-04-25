@@ -8,7 +8,106 @@
 </head>
 <body>
     <script>
+    //chapter 5
+        //Array.prototype.sort(fn);
+        /*原理:没有fn，则逐项调用toString()，按转化的字符串的诸个字符的Unicode位点进行排序；
+        fn(a, b) 小于 0,a前b后，
+        fn(a, b) 等于 0,不变，
+        fn(a, b) 大于 0,反之。
+        function compare(a, b) {
+          if (a < b ) {
+            return -1;
+          }
+          if (a > b ) {
+            return 1;
+          }
+          return 0;
+        }*/
+        /*var a= [2,1,3];
+        console.log(a.sort((a,b) => a - b)); //[1,2,3]
+        console.log(a.sort((a,b) => b - a)); //[3,2,1]*/
+
+        /*var data2 = [
+            {name:'lx2',age:17},
+            {name:'lx',age:19},
+            {name:'lx3',age:18}
+        ];
+        data2.sort(function(a,b) {
+            var v1 = a.age;
+            var v2 = b.age;
+            if(v1<v2){
+                return -1;
+            }
+            if(v1>v2){
+                return 1;
+            }
+            return 0;
+        })
+        console.log(data2);
+        data2.sort(function(a,b) {
+            var v1 = a.name.toUpperCase();
+            var v2 = b.name.toUpperCase();
+            if(v1<v2){
+                return -1;
+            }
+            if(v1>v2){
+                return 1;
+            }
+            return 0;
+        })
+        console.log(data2);*/
+        //此处存疑，为何两次都按照后一次的属性排列
+
     //chapter 6
+        //属性(数据属性/访问器属性)
+            //定义属性内部特性(描述符, [[attribute]] )方法
+            /*数据属性
+            Object.defineProperty(obj,property,{
+                writable: true,
+                enumberabel: true,
+                configurable: true,
+                value: true
+            })*/
+            /*访问器属性
+            Object.defineProperty(obj,property,{
+                enumberabel: true,
+                configurable: true,
+                get:function(){},
+                set:function(){}
+            })
+            var book = {
+                _year: 2018,
+                edition: 1
+            };
+            Object.defineProperty(book,"year",{
+                get:function() {
+                    return this._year;
+                },
+                set: function(v) {
+                    if (v>2018){
+                        this._year = v;
+                    }
+                }
+            });
+            book.year = 2019;  //一定要通过set？此处为何不直接修改book,_year = 2019?(_是种约定，只能通过对象方法访问)
+            alert(book.edition);*/
+
+            //注意:调用defineProperty,如不指定，enumberabel,writable,configurable都默认为true
+            //configurable一旦定义成false，则不可再改回。
+            /*var person = {};
+            Object.defineProperty(person,'age',{
+                configurable: false,
+                value: 18
+            });
+            alert(person.age);
+            delete person.age;
+            alert(person.age);
+
+            Object.defineProperty(person,'age',{
+                configurable: true,
+            });
+            alert(person.age);  //error: Cannot redefine property: age*/
+
         //创建自定义对象方法
             //1.创建一个Object实例
             /*var person = new Object();
@@ -68,7 +167,7 @@
             var person1 = new Person();
             var person2 = new Person();
             alert(person1.sayName == person2.sayName)//true;*/
-            //缺点：不能像构造函数传参；原型中引用类型的属性也会被共享（修改person1.friends,person2.friends一起变）
+            //缺点：不能向构造函数传参；原型中引用类型的属性也会被共享（修改person1.friends,person2.friends一起变）
                 //原型模式字面量语法
                 /*function Person() {}
                 Person.prototype = {
@@ -119,50 +218,46 @@
                 }
             }
             friend.sayHi(); //"friend.sayHi is not a function"*/
-            
-        /*var book = {
-            _year: 2018,
-        };
-        Object.defineProperty(book,"year",{
-            get:function() {
-                return this._year;
-            },
-            set: function(v) {
-                if (v>2018){
-                    this._year = v;
-                }
-            }
-        });
-        book._year = 2019;
-        alert(book.year);*/
-
-        /*function AAA () {
+        
+        //寄生构造函数模式
+        //需要一个具有额外方法的数组，不能直接修改数组构造函数
+        /*function SpecialArray() {
+            var v = new Array(); 
+            v.push.apply(v,arguments);
+            v.toPipedString = function() {
+                return v.join('|');
+            };
+            return v;
         }
-        var A1 = new AAA();
-        AAA.prototype = {
-            age: 11,
-            name: 'dsa',
-            sayName: function() {
-                alert(this.name);
-            }
-        };
-        //var A1 = new AAA();
-        var A2 = new AAA();
-        A1.sayName();
-        //alert(A1.sayName == A2.sayName);*/
+        var larr = new SpecialArray('a','b','c');
+        
+        console.log(larr);*/
+        //larr.toPipedString();
+        //此处存疑，和直接larr = SpecialArray('a','b','c')有什么区别？
 
-        /*function AAA () {
+        //继承
+        //原理：子类型的原型等于父类型的实例(重写子类型的原型对象)，子类型的原型中则会有内部属性指向父类型的原型
+        /*function Father() {
+            this.name = 'lx';
+            this.sex = 'male';
         }
-        AAA.prototype = {
-            age: 11,
-            name: 'dsa',
-            sayName: function() {
+        Father.prototype.sayName = function() {
             alert(this.name);
         }
-        };
-        var A1 = new AAA();
-        alert(A1.constructor == AAA);*/  
+        function Son() {
+            this.name = 'my';
+            this.age = 66;
+        }
 
+        Son.prototype = new Father();
+        Son.prototype.growUp = function(){
+            this.age++;
+        }
+
+        var son1 = new Son();
+        console.log(son1,Son.prototype);*/
+        //此时Son类型的原型被重写，console.log(son1.constructor,'~~~~~~~~~~~~~~~~~~~~',son1.__proto__.constructor,'~~~~~~~~~~~~~~~~~~~~',Son.prototype.constructor,'~~~~~~~~~~~~~~~~~~~~',new Father().__proto__.constructor,'~~~~~~~~~~~~~~~~~~~~',Father.prototype.constructor,'~~~~~~~~~~~~~~~~~~~~',Father);
+        
     </script>
 </body>
 </html>

@@ -203,7 +203,7 @@
 
         //原型动态性
             //可以随时为原型添加属性和方法，并立刻在实例中生效
-            /*function Person() {}
+            /*function Person() {} 
             var friend = new Person();
             Person.prototype.sayHi = function() {
                 alert("hi");
@@ -245,7 +245,7 @@
             alert(this.name);
         }
         function Son() {
-            this.name = 'my';
+            this.name = 'my';【。 
             this.age = 66;
         }
 
@@ -257,7 +257,150 @@
         var son1 = new Son();
         console.log(son1,Son.prototype);*/
         //此时Son类型的原型被重写，console.log(son1.constructor,'~~~~~~~~~~~~~~~~~~~~',son1.__proto__.constructor,'~~~~~~~~~~~~~~~~~~~~',Son.prototype.constructor,'~~~~~~~~~~~~~~~~~~~~',new Father().__proto__.constructor,'~~~~~~~~~~~~~~~~~~~~',Father.prototype.constructor,'~~~~~~~~~~~~~~~~~~~~',Father);
+
+        //确定实例在不在原型链上的方法
+        //1.instanceof （实例和构造函数）
+        //alert(son1 instanceof Son); 
+        //alert(son1 instanceof Object);
+        //2.isPrototypeOf (实例和原型)
+        //alert(Father.prototype.isPrototypeOf(son1));
         
+        //组合继承
+        //原型链继承的缺点：父类型的实例的引用类型属性也被子类型原型共享了，子类型实例上 引用类型属性 修改，原型上继承的属性也会变；2.不能给超类型的构造函数传递参数。
+        /*function Father(name) {
+            this.name = name;
+            this.hobbies = ['dota','reading','ball games'];
+        }
+        Father.prototype.sayName = function() {
+            alert(this.name);
+        }
+        function Son(name,age) {
+            Father.call(this,name);//继承超类型属性
+            this.age = age;
+        }
+        Son.prototype = new Father('lx');//继承超类型方法
+        Son.prototype.constructor = Son;
+
+        Son.prototype.sayAge = function() {
+            alert(this.age);
+        }//子类型自己独有的方法
+
+        var son1 = new Son('lx1',18);
+        son1.sayName();
+        son1.hobbies.push('eating');
+        console.log(son1.hobbies);
+
+        var son2 = new Son('lx2',19);
+        son2.sayAge();
+        console.log(son2.hobbies);*/
+
+        //原型式继承(基于已有的对象创建新对象，浅复制同时不必创建自定义类型)
+        /*function object(o) {
+            function F(){}
+            F.prototype = o;
+            return new F();
+        }
+        var person = {
+            name: 'lx',
+            friends: ['a','b','c']
+        }
+        var p1 = object(person);
+        p1.name = 'lx1';
+        p1.friends.push('d');
+        
+        //缺点：引用类型属性被共享
+        var p2 = object(person);
+        console.log(p2.name,p2.friends);
+        //等同于Object.create(person)方法（此方法可有第二个参数，接受一个为新对象定义额外属性的对象）
+        var p3 = Object.create(person);
+        alert(p3.name);*/
+
+        //寄生组合式继承（最理想的继承范式）
+        //思路：通过寄生式继承获得超类型原型的一个副本（Object.create（super.prototype）方法）
+        //把这个副本赋值给子类型的原型从而继承超类型原型上的方法；
+        //然后通过在子类型构造函数中借用超类型构造函数，继承超类型的属性。
+        //相较于组合继承，只调用了一次new Father()，只有实例属性的继承，没有原型属性的继承（实例属性会覆盖原型属性，造成重复）。
+
+
+        //Chapter 7
+        //递归
+        //1.匿名函数
+        /*function f(num) {
+            if (num <= 1) {
+                return 1;
+            }else {
+                return num * f(num-1);
+            }
+        } 
+        //问题
+        var t = f;
+        f = null;
+        t(4);//error:f is not a function*/
+
+        //2.arguments.callee
+        /*function f(num) {
+            if (num <= 1) {
+                return 1;
+            }else {
+                return num * arguments.callee(num-1); //严格模式下不可用
+            }
+        }
+        var t = f;
+        f = null;
+        console.log(t(4));*/
+        
+        
+        //3.命名函数表达式
+        /*var t = function f(num) {
+            console.log(f);
+            if (num <= 1) {
+                return 1;
+            }else {
+                return num * f(num-1);
+            }
+        };//书上178页为什么要加个()?M
+        //console.log(f);//f is not defined
+        f = null;
+        console.log(t(4));//24*/
+
+        //闭包：有权访问另一个函数作用域中变量的函数
+        //this指向
+        /*var name = 'aaa';
+        var obj = {  
+                return this.name;
+            }
+        }
+        obj.getName(); //'obj1'
+        (obj.getName = obj.getName)()//赋值表达式返回的是函数本身，所以this的值不能得到维持（匿名函数的执行环境具有全局性）*/
+        
+        //模仿块级作用域
+        //f(4);
+        /*function f(count) {
+            for(var i=0; i<count; i++){
+                alert(i);   //0,1,2,3
+            }
+            console.log(i)  //4  //js没有块级作用域的概念，在块语句中定义的变量，实际上是在 包含函数 中创建的
+        }*/
+        
+        /*function f(count) {
+            for(var i=0; i<count; i++){
+                alert(i);   //0,1,2,3
+            }
+            var i;      //此处其实是错误申明了同一个变量，js会忽略（若重新赋值会执行）
+            console.log(i)  //4
+        }*/
+        
+        //可以用匿名函数模仿块级作用域来解决上述问题,同时在匿名函数执行完毕时，定义的任何变量都会被销毁，避免内存泄漏和命名冲突
+        /*function f(count) {
+            (function() {
+                for(var i=0; i<count; i++){
+                    alert(i);   //0,1,2,3
+                }
+            })()                                   //加个()是因为函数申明后面不能加()，变成函数表达式
+            console.log(i)  //error:i is not defined
+        }*/
+
+
     </script>
 </body>
 </html>

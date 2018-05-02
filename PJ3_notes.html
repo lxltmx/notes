@@ -58,6 +58,7 @@
         console.log(data2);*/
         //此处存疑，为何两次都按照后一次的属性排列
 
+
     //chapter 6
         //属性(数据属性/访问器属性)
             //定义属性内部特性(描述符, [[attribute]] )方法
@@ -350,6 +351,7 @@
         son1.sayName();
         son1.sayAge();*/
 
+
         //Chapter 7
         //递归
         //1.匿名函数
@@ -449,6 +451,102 @@
         }*/
         
 
+    //Chapter 21
+        //手写一个Ajax
+        /*function ajax(opt) {
+            opt = opt || {};
+            if(!opt.url) return;
+            opt.type = opt.type || 'get';
+            opt.data = opt.data || {};
+            opt.timeout = opt.timeout || 0;
+            //拼接url地址
+            var arr = [];
+            for(var key in opt.data){
+                arr.push(key + '=' + encodeURIComponent(opt.data[key]));
+            }
+            var sData = arr.join('&');
+            //创建ajax对象
+            if(window.XMLHttpRequest){
+                var xhr = new XMLHttpRequest();
+            }else {
+                var xhr = new ActiveXObject('MicrosoftXMLHttp');
+            }
+            //发送请求
+            if(opt.type == 'get'){
+                xhr.open('get',opt.url + '?' + sData,true);
+                xhr.send();
+            }else{
+                xhr.open('post',opt.url,true);
+                xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+                xhr.send(sData);
+            }
+            //接收响应
+            xhr.onreadystateChange = function() {
+                if(xhr.readyState == 4) {
+                    if(xhr.status >= 200 && xhr.status < 300 || xhr.status = 304) {
+                        opt.success && opt.success(xhr.responseText);
+                    }else{
+                        opt.err && opt.err();
+                    }
+                }
+            }
+            //响应超时
+            if(opt.timeout) {
+                setTimeout(function() {
+                    xhr.abort();
+                },opt.timeout);
+            }
+        }*/
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
     </script>
 </body>

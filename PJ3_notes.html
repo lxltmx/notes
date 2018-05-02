@@ -316,11 +316,39 @@
         alert(p3.name);*/
 
         //寄生组合式继承（最理想的继承范式）
-        //思路：通过寄生式继承获得超类型原型的一个副本（Object.create（super.prototype）方法）
-        //把这个副本赋值给子类型的原型从而继承超类型原型上的方法；
-        //然后通过在子类型构造函数中借用超类型构造函数，继承超类型的属性。
-        //相较于组合继承，只调用了一次new Father()，只有实例属性的继承，没有原型属性的继承（实例属性会覆盖原型属性，造成重复）。
 
+        /*思路：组合继承是通过将父类型的实例赋值给子类型的原型，继承共享的属性和方法，
+        然后通过借用构造函数实现实例属性的继承(在子类型构造函数中借用超类型构造函数)。
+        寄生组合式继承思路基本一样，区别在于通过寄生式继承获得超类型构造函数的一个实例副本（Object.create（Father.prototype）方法），
+        把这个副本赋值给子类型的原型。
+        因为不是通过new得到，所以这个对象中没有父类型构造函数中的属性，即子类型的原型中也不会有这些实例属性。
+        相较于组合继承，只调用了一次new Father()，不会造成与借用构造函数实现的实例属性的重复。*/
+        /*function inherit(sonType,fatherType) {
+            var prototype = Object.create(fatherType.prototype);
+            prototype.constructor = sonType;
+            sonType.prototype = prototype;
+        }
+        function Father(name) {
+            this.name = name;
+        }
+        Father.prototype.sayName = function() {
+            alert(this.name);
+        }
+
+        function Son(name,age) {
+            Father.call(this,name);
+            this.age = age;
+        }
+
+        inherit(Son,Father);
+        
+        Son.prototype.sayAge = function() {
+            alert(this.age);
+        }
+
+        var son1 = new Son('lx',18);
+        son1.sayName();
+        son1.sayAge();*/
 
         //Chapter 7
         //递归
@@ -363,7 +391,27 @@
         f = null;
         console.log(t(4));//24*/
 
+        //作用域链（本质：指向变量对象的列表指针）
+        /*函数创建时，会预先创建一个包含全局变量对象的作用域链（保存在内部[[Scope]]中）
+        函数执行时，复制函数[[Scope]]属性中对象构建执行环境的作用域链，同时根据参数初始化一个活动对象（变量对象）
+        函数执行完毕，局部活动对象销毁，内存保留全局执行环境的变量对象*/
+
         //闭包：有权访问另一个函数作用域中变量的函数
+        /*function f1() {
+            var result = new Array();
+            for(var i=0; i < 10; i++){
+                result[i] = function(num) {
+
+                    return function(){
+                        return num;
+                    };
+
+                }(i);
+            }
+            return result;
+        }
+        console.log(f1()[2]());*/
+
         //this指向
         /*var name = 'aaa';
         var obj = {  
@@ -399,6 +447,7 @@
             })()                                   //加个()是因为函数申明后面不能加()，变成函数表达式
             console.log(i)  //error:i is not defined
         }*/
+        
 
 
     </script>

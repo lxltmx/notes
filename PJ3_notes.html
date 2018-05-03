@@ -352,7 +352,7 @@
         son1.sayAge();*/
 
 
-        //Chapter 7
+    //Chapter 7
         //递归
         //1.匿名函数
         /*function f(num) {
@@ -449,7 +449,48 @@
             })()                                   //加个()是因为函数申明后面不能加()，变成函数表达式
             console.log(i)  //error:i is not defined
         }*/
-        
+    
+
+    //Chapter 13
+        //兼容性检测网站：https://caniuse.com
+        //常见兼容性
+            /*dom2 >=ie9
+            background-size: >=ie9
+            圆角: >= ie9
+            阴影: >= ie9
+            动画/渐变: >= ie10*/
+            
+        //事件
+        //绑定&解绑
+            //1.addEventListener & removeEventListener（>=ie9）
+                //obj.addEventListener('click',handler,false);
+            //2.attachEvent & detachEvent (<=ie8)
+                /*obj.attachEvent('onclick',handler);
+                ie8 只支持事件冒泡，且时间处理程序会在全局作用域中运行(attachEvent方法添加的事件处理函数中this等于window)。
+                通过attachEvent添加多个事件，执行顺序和添加顺序相反*/
+
+        //js阻止事件冒泡和默认行为
+        /*obj.onclick = function (ev){
+            var oEvent = ev || event;     //ie低版本event是挂在window上的
+
+            //事件的实际发生对象
+            oEvent.target || oEvent.srcElement(ie专属 为啥不用this？ ie事件处理函数中this指向不同，所以用srcElement保险)
+
+            //mouseover和mouseout事件的相关对象
+            oEvent.relatedTarget
+            fromElement | toElement    //ie
+
+            //事件冒泡
+            oEvent.cancelBubble = true;   //ie
+            oEvent.stopPropagation();
+
+            //默认行为
+            oEvent.preventDefault(); 
+            return false;                //ie
+        }*/
+        //检测浏览器是否支持某个事件 document.implementation.hasFeature("","3.0");
+        //事件对象的兼容方法详见 PJ3 Page360
+
 
     //Chapter 21
         //手写一个Ajax
@@ -481,7 +522,7 @@
                 xhr.send(sData);
             }
             //接收响应
-            xhr.onreadystateChange = function() {
+            xhr.onreadystatechange = function() {
                 if(xhr.readyState == 4) {
                     if(xhr.status >= 200 && xhr.status < 300 || xhr.status = 304) {
                         opt.success && opt.success(xhr.responseText);
@@ -497,57 +538,6 @@
                 },opt.timeout);
             }
         }*/
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
     </script>
 </body>
 </html>

@@ -8,56 +8,145 @@
 </head>
 <body>
     <script>
+    //chapter 3
+        //toString() & String()区别
+            /*
+             *  1.xxx.toString()    String(xxx)
+             *   2.null和undefined没有toString()方法，String()先调用toString(),没有则返回本身
+             */
+
+        //乘性操作符(扯淡的运算？)
+            /*
+             *  Number.POSITIVE_INFINITY:Infinity   
+             *  Number.NEGATIVE_INFINITY:-Infinity
+             */
+
+            /*
+             *  0 * Infinity   //NaN
+             *  0 / Infinity   //0
+             */
+
+            /*
+             *  -Infinity * -Infinity  //-Infinity
+             *  -Infinity / -Infinity  //NaN
+             */
+
+            /*  
+             *  0 / 0  //NaN
+             *  !0 / 0 +/-Infinity
+             */
+            //求模 %    不合常理结果就为NaN   P48
+        
+        //加性操作符
+            /*
+             *  Infinity + (-Infinity)    //NaN
+             */
+        
+        //关系操作符
+            /*
+             *   NaN < 3    //false
+             *   NaN >= 3   //false
+             */
+
+
     //chapter 5
         //Array.prototype.sort(fn);
-        /*原理:没有fn，则逐项调用toString()，按转化的字符串的诸个字符的Unicode位点进行排序；
-        fn(a, b) 小于 0,a前b后，
-        fn(a, b) 等于 0,不变，
-        fn(a, b) 大于 0,反之。
-        function compare(a, b) {
-          if (a < b ) {
-            return -1;
-          }
-          if (a > b ) {
-            return 1;
-          }
-          return 0;
-        }*/
-        /*var a= [2,1,3];
-        console.log(a.sort((a,b) => a - b)); //[1,2,3]
-        console.log(a.sort((a,b) => b - a)); //[3,2,1]*/
-
-        /*var data2 = [
-            {name:'lx2',age:17},
-            {name:'lx',age:19},
-            {name:'lx3',age:18}
-        ];
-        data2.sort(function(a,b) {
-            var v1 = a.age;
-            var v2 = b.age;
-            if(v1<v2){
+            /*原理:没有fn，则逐项调用toString()，按转化的字符串的诸个字符的Unicode位点进行排序；
+            fn(a, b) 小于 0,a前b后，
+            fn(a, b) 等于 0,不变，
+            fn(a, b) 大于 0,反之。
+            function compare(a, b) {
+              if (a < b ) {
                 return -1;
-            }
-            if(v1>v2){
+              }
+              if (a > b ) {
                 return 1;
-            }
-            return 0;
-        })
-        console.log(data2);
-        data2.sort(function(a,b) {
-            var v1 = a.name.toUpperCase();
-            var v2 = b.name.toUpperCase();
-            if(v1<v2){
-                return -1;
-            }
-            if(v1>v2){
-                return 1;
-            }
-            return 0;
-        })
-        console.log(data2);*/
-        //此处存疑，为何两次都按照后一次的属性排列
+              }
+              return 0;
+            }*/
+            /*var a= [2,1,3];
+            console.log(a.sort((a,b) => a - b)); //[1,2,3]
+            console.log(a.sort((a,b) => b - a)); //[3,2,1]*/
 
+            /*var data2 = [
+                {name:'lx2',age:17},
+                {name:'lx',age:19},
+                {name:'lx3',age:18}
+            ];
+            data2.sort(function(a,b) {
+                var v1 = a.age;
+                var v2 = b.age;
+                if(v1<v2){
+                    return -1;
+                }
+                if(v1>v2){
+                    return 1;
+                }
+                return 0;
+            })
+            console.log(data2);
+            data2.sort(function(a,b) {
+                var v1 = a.name.toUpperCase();
+                var v2 = b.name.toUpperCase();
+                if(v1<v2){
+                    return -1;
+                }
+                if(v1>v2){
+                    return 1;
+                }
+                return 0;
+            })
+            console.log(data2);*/
+            //此处存疑，为何两次都按照后一次的属性排列
+
+        //RegExp类型
+            //1.找重复项最多的字符的个数
+            //var str = 'abssscfjsaaaacaabbjtyyy';
+            /*var str2 = str.split('').sort().join('');
+            var re = /([a-z])\1+/g;
+            var max = 0;
+            var val = '';
+            while(re.exec(str2)){
+                if( RegExp.lastMatch.length > max){
+                        val = RegExp.lastMatch,
+                        max = RegExp.lastMatch.length
+                }
+            }
+
+            str2.replace(re,function(match,pos) {
+                if(match.length > max){
+                    max = match.length;
+                    val = pos;
+                }
+
+            })
+            console.log(max,val);*/
+
+            /*var arr = str.split('');
+            var json = {};
+            arr.map(function(ai,i) {
+                var n = 0;
+                arr.map(function(aj,j) {
+                    if(ai==aj) {
+                        n++;
+                        json[ai]=n;
+                    }
+                })
+            })
+            console.log(json);*/
+
+            //2.常用表单校验
+                //验证中文姓名
+                //var re = /[\u4e00-\u9fa5]/g;
+                //行首尾去空格
+                /*function trim(str) {
+                    var re = /^\s+|\s+$/g;
+                    return str.replace(re,'');
+                }*/
+                //验证邮箱
+                //var re = /^\w+@[0-9a-z]+(\.[a-z]+){1,3}$/g;
+                //验证网址
+                //var re = /((http|https)?:\/\/)?[a-z]+(\.\w+){1,3}(\.[a-z]+){1,3}$/g; //自己瞎写的
 
     //chapter 6
         //属性(数据属性/访问器属性)
@@ -221,234 +310,311 @@
             friend.sayHi(); //"friend.sayHi is not a function"*/
         
         //寄生构造函数模式
-        //需要一个具有额外方法的数组，不能直接修改数组构造函数
-        /*function SpecialArray() {
-            var v = new Array(); 
-            v.push.apply(v,arguments);
-            v.toPipedString = function() {
-                return v.join('|');
-            };
-            return v;
-        }
-        var larr = new SpecialArray('a','b','c');
-        
-        console.log(larr);*/
-        //larr.toPipedString();
-        //此处存疑，和直接larr = SpecialArray('a','b','c')有什么区别？
+            //场景：需要一个具有额外方法的数组，不能直接修改数组构造函数
+            /*function SpecialArray() {
+                var v = new Array(); 
+                v.push.apply(v,arguments);
+                v.toPipedString = function() {
+                    return v.join('|');
+                };
+                return v;
+            }
+            var larr = new SpecialArray('a','b','c');
+            
+            console.log(larr);*/
+            //larr.toPipedString();
+            //此处存疑，和直接larr = SpecialArray('a','b','c')有什么区别？
 
         //继承
-        //原理：子类型的原型等于父类型的实例(重写子类型的原型对象)，子类型的原型中则会有内部属性指向父类型的原型
-        /*function Father() {
-            this.name = 'lx';
-            this.sex = 'male';
-        }
-        Father.prototype.sayName = function() {
-            alert(this.name);
-        }
-        function Son() {
-            this.name = 'my';【。 
-            this.age = 66;
-        }
+            //原理：子类型的原型等于父类型的实例(重写子类型的原型对象)，子类型的原型中则会有内部属性指向父类型的原型
+                /*function Father() {
+                    this.name = 'lx';
+                    this.sex = 'male';
+                }
+                Father.prototype.sayName = function() {
+                    alert(this.name);
+                }
+                function Son() {
+                    this.name = 'my';【。 
+                    this.age = 66;
+                }
 
-        Son.prototype = new Father();
-        Son.prototype.growUp = function(){
-            this.age++;
-        }
+                Son.prototype = new Father();
+                Son.prototype.growUp = function(){
+                    this.age++;
+                }
 
-        var son1 = new Son();
-        console.log(son1,Son.prototype);*/
-        //此时Son类型的原型被重写，console.log(son1.constructor,'~~~~~~~~~~~~~~~~~~~~',son1.__proto__.constructor,'~~~~~~~~~~~~~~~~~~~~',Son.prototype.constructor,'~~~~~~~~~~~~~~~~~~~~',new Father().__proto__.constructor,'~~~~~~~~~~~~~~~~~~~~',Father.prototype.constructor,'~~~~~~~~~~~~~~~~~~~~',Father);
+                var son1 = new Son();
+                console.log(son1,Son.prototype);*/
+                //此时Son类型的原型被重写，console.log(son1.constructor,'~~~~~~~~~~~~~~~~~~~~',son1.__proto__.constructor,'~~~~~~~~~~~~~~~~~~~~',Son.prototype.constructor,'~~~~~~~~~~~~~~~~~~~~',new Father().__proto__.constructor,'~~~~~~~~~~~~~~~~~~~~',Father.prototype.constructor,'~~~~~~~~~~~~~~~~~~~~',Father);
 
-        //确定实例在不在原型链上的方法
-        //1.instanceof （实例和构造函数）
-        //alert(son1 instanceof Son); 
-        //alert(son1 instanceof Object);
-        //2.isPrototypeOf (实例和原型)
-        //alert(Father.prototype.isPrototypeOf(son1));
+            //确定实例在不在原型链上的方法
+                //1.instanceof （检测一个对象是否是某个构造函数的实例）
+                //alert(son1 instanceof Son); 
+                //alert(son1 instanceof Object);
+                //2.isPrototypeOf (检测一个原型对象是否在某个实例的原型链中)
+                //alert(Father.prototype.isPrototypeOf(son1));
         
-        //组合继承
-        //原型链继承的缺点：父类型的实例的引用类型属性也被子类型原型共享了，子类型实例上 引用类型属性 修改，原型上继承的属性也会变；2.不能给超类型的构造函数传递参数。
-        /*function Father(name) {
-            this.name = name;
-            this.hobbies = ['dota','reading','ball games'];
-        }
-        Father.prototype.sayName = function() {
-            alert(this.name);
-        }
-        function Son(name,age) {
-            Father.call(this,name);//继承超类型属性
-            this.age = age;
-        }
-        Son.prototype = new Father('lx');//继承超类型方法
-        Son.prototype.constructor = Son;
+            //组合继承
+                //原型链继承的缺点：父类型的实例的引用类型属性也被子类型原型共享了，子类型实例上 引用类型属性 修改，原型上继承的属性也会变；2.不能给超类型的构造函数传递参数。
+                /*function Father(name) {
+                    this.name = name;
+                    this.hobbies = ['dota','reading','ball games'];
+                }
+                Father.prototype.sayName = function() {
+                    alert(this.name);
+                }
+                function Son(name,age) {
+                    Father.call(this,name);//继承超类型属性
+                    this.age = age;
+                }
+                Son.prototype = new Father('lx');//继承超类型方法
+                Son.prototype.constructor = Son;
 
-        Son.prototype.sayAge = function() {
-            alert(this.age);
-        }//子类型自己独有的方法
+                Son.prototype.sayAge = function() {
+                    alert(this.age);
+                }//子类型自己独有的方法
 
-        var son1 = new Son('lx1',18);
-        son1.sayName();
-        son1.hobbies.push('eating');
-        console.log(son1.hobbies);
+                var son1 = new Son('lx1',18);
+                son1.sayName();
+                son1.hobbies.push('eating');
+                console.log(son1.hobbies);
 
-        var son2 = new Son('lx2',19);
-        son2.sayAge();
-        console.log(son2.hobbies);*/
+                var son2 = new Son('lx2',19);
+                son2.sayAge();
+                console.log(son2.hobbies);*/
 
-        //原型式继承(基于已有的对象创建新对象，浅复制同时不必创建自定义类型)
-        /*function object(o) {
-            function F(){}
-            F.prototype = o;
-            return new F();
-        }
-        var person = {
-            name: 'lx',
-            friends: ['a','b','c']
-        }
-        var p1 = object(person);
-        p1.name = 'lx1';
-        p1.friends.push('d');
-        
-        //缺点：引用类型属性被共享
-        var p2 = object(person);
-        console.log(p2.name,p2.friends);
-        //等同于Object.create(person)方法（此方法可有第二个参数，接受一个为新对象定义额外属性的对象）
-        var p3 = Object.create(person);
-        alert(p3.name);*/
+            //原型式继承(基于已有的对象创建新对象，浅复制同时不必创建自定义类型)
+                /*function object(o) {
+                    function F(){}
+                    F.prototype = o;
+                    return new F();
+                }
+                var person = {
+                    name: 'lx',
+                    friends: ['a','b','c']
+                }
+                var p1 = object(person);
+                p1.name = 'lx1';
+                p1.friends.push('d');
+                
+                //缺点：引用类型属性被共享
+                var p2 = object(person);
+                console.log(p2.name,p2.friends);
+                //等同于Object.create(person)方法（此方法可有第二个参数，接受一个为新对象定义额外属性的对象）
+                var p3 = Object.create(person);
+                alert(p3.name);*/
 
         //寄生组合式继承（最理想的继承范式）
+            /*思路：组合继承是通过将父类型的实例赋值给子类型的原型，继承共享的属性和方法，
+            然后通过借用构造函数实现实例属性的继承(在子类型构造函数中借用超类型构造函数)。
+            寄生组合式继承思路基本一样，区别在于通过寄生式继承获得超类型构造函数的一个实例副本（Object.create（Father.prototype）方法），
+            把这个副本赋值给子类型的原型。
+            因为不是通过new得到，所以这个对象中没有父类型构造函数中的属性，即子类型的原型中也不会有这些实例属性。
+            相较于组合继承，只调用了一次new Father()，不会造成与借用构造函数实现的实例属性的重复。*/
+            /*function inherit(sonType,fatherType) {
+                var prototype = Object.create(fatherType.prototype);
+                prototype.constructor = sonType;
+                sonType.prototype = prototype;
+            }
+            function Father(name) {
+                this.name = name;
+            }
+            Father.prototype.sayName = function() {
+                alert(this.name);
+            }
 
-        /*思路：组合继承是通过将父类型的实例赋值给子类型的原型，继承共享的属性和方法，
-        然后通过借用构造函数实现实例属性的继承(在子类型构造函数中借用超类型构造函数)。
-        寄生组合式继承思路基本一样，区别在于通过寄生式继承获得超类型构造函数的一个实例副本（Object.create（Father.prototype）方法），
-        把这个副本赋值给子类型的原型。
-        因为不是通过new得到，所以这个对象中没有父类型构造函数中的属性，即子类型的原型中也不会有这些实例属性。
-        相较于组合继承，只调用了一次new Father()，不会造成与借用构造函数实现的实例属性的重复。*/
-        /*function inherit(sonType,fatherType) {
-            var prototype = Object.create(fatherType.prototype);
-            prototype.constructor = sonType;
-            sonType.prototype = prototype;
-        }
-        function Father(name) {
-            this.name = name;
-        }
-        Father.prototype.sayName = function() {
-            alert(this.name);
-        }
+            function Son(name,age) {
+                Father.call(this,name);
+                this.age = age;
+            }
 
-        function Son(name,age) {
-            Father.call(this,name);
-            this.age = age;
-        }
+            inherit(Son,Father);
+            
+            Son.prototype.sayAge = function() {
+                alert(this.age);
+            }
 
-        inherit(Son,Father);
-        
-        Son.prototype.sayAge = function() {
-            alert(this.age);
-        }
-
-        var son1 = new Son('lx',18);
-        son1.sayName();
-        son1.sayAge();*/
+            var son1 = new Son('lx',18);
+            son1.sayName();
+            son1.sayAge();*/
 
 
     //Chapter 7
         //递归
-        //1.匿名函数
-        /*function f(num) {
-            if (num <= 1) {
-                return 1;
-            }else {
-                return num * f(num-1);
-            }
-        } 
-        //问题
-        var t = f;
-        f = null;
-        t(4);//error:f is not a function*/
+            //1.匿名函数
+            /*function f(num) {
+                if (num <= 1) {
+                    return 1;
+                }else {
+                    return num * f(num-1);
+                }
+            } 
+            //问题
+            var t = f;
+            f = null;
+            t(4);//error:f is not a function*/
 
-        //2.arguments.callee
-        /*function f(num) {
-            if (num <= 1) {
-                return 1;
-            }else {
-                return num * arguments.callee(num-1); //严格模式下不可用
+            //2.arguments.callee
+            /*function f(num) {
+                if (num <= 1) {
+                    return 1;
+                }else {
+                    return num * arguments.callee(num-1); //严格模式下不可用
+                }
             }
-        }
-        var t = f;
-        f = null;
-        console.log(t(4));*/
-        
-        
-        //3.命名函数表达式
-        /*var t = function f(num) {
-            console.log(f);
-            if (num <= 1) {
-                return 1;
-            }else {
-                return num * f(num-1);
-            }
-        };//书上178页为什么要加个()?M
-        //console.log(f);//f is not defined
-        f = null;
-        console.log(t(4));//24*/
+            var t = f;
+            f = null;
+            console.log(t(4));*/
+            
+            //3.命名函数表达式
+            /*var t = function f(num) {
+                console.log(f);
+                if (num <= 1) {
+                    return 1;
+                }else {
+                    return num * f(num-1);
+                }
+            };//书上178页为什么要加个()?M
+            //console.log(f);//f is not defined
+            f = null;
+            console.log(t(4));//24*/
 
         //作用域链（本质：指向变量对象的列表指针）
-        /*函数创建时，会预先创建一个包含全局变量对象的作用域链（保存在内部[[Scope]]中）
-        函数执行时，复制函数[[Scope]]属性中对象构建执行环境的作用域链，同时根据参数初始化一个活动对象（变量对象）
-        函数执行完毕，局部活动对象销毁，内存保留全局执行环境的变量对象*/
-
+            /*函数创建时，会预先创建一个包含全局变量对象的作用域链（保存在内部[[Scope]]中）
+            函数执行时，复制函数[[Scope]]属性中对象构建执行环境的作用域链，同时根据参数初始化一个活动对象（变量对象）
+            函数执行完毕，局部活动对象销毁，内存保留全局执行环境的变量对象*/
+        
         //闭包：有权访问另一个函数作用域中变量的函数
-        /*function f1() {
-            var result = new Array();
-            for(var i=0; i < 10; i++){
-                result[i] = function(num) {
-
-                    return function(){
-                        return num;
-                    };
-
-                }(i);
-            }
-            return result;
-        }
-        console.log(f1()[2]());*/
-
-        //this指向
-        /*var name = 'aaa';
-        var obj = {  
-                return this.name;
-            }
-        }
-        obj.getName(); //'obj1'
-        (obj.getName = obj.getName)()//赋值表达式返回的是函数本身，所以this的值不能得到维持（匿名函数的执行环境具有全局性）*/
-        
-        //模仿块级作用域
-        //f(4);
-        /*function f(count) {
-            for(var i=0; i<count; i++){
-                alert(i);   //0,1,2,3
-            }
-            console.log(i)  //4  //js没有块级作用域的概念，在块语句中定义的变量，实际上是在 包含函数 中创建的
-        }*/
-        
-        /*function f(count) {
-            for(var i=0; i<count; i++){
-                alert(i);   //0,1,2,3
-            }
-            var i;      //此处其实是错误申明了同一个变量，js会忽略（若重新赋值会执行）
-            console.log(i)  //4
-        }*/
-        
-        //可以用匿名函数模仿块级作用域来解决上述问题,同时在匿名函数执行完毕时，定义的任何变量都会被销毁，避免内存泄漏和命名冲突
-        /*function f(count) {
-            (function() {
+            //模仿块级作用域
+            //f(4);
+            /*function f(count) {
                 for(var i=0; i<count; i++){
                     alert(i);   //0,1,2,3
                 }
-            })()                                   //加个()是因为函数申明后面不能加()，变成函数表达式
-            console.log(i)  //error:i is not defined
-        }*/
+                console.log(i)  //4  //js没有块级作用域的概念，在块语句中定义的变量，实际上是在 包含函数 中创建的
+            }*/
+            
+            /*function f(count) {
+                for(var i=0; i<count; i++){
+                    alert(i);   //0,1,2,3
+                }
+                var i;      //此处其实是错误申明了同一个变量，js会忽略（若重新赋值会执行）
+                console.log(i)  //4
+            }*/
+            //可以用匿名函数模仿块级作用域来解决上述问题,同时在匿名函数执行完毕时，定义的任何变量都会被销毁，避免内存泄漏和命名冲突
+            /*function f(count) {
+                (function() {
+                    for(var i=0; i<count; i++){
+                        alert(i);   //0,1,2,3
+                    }
+                })()                                   //加个()是因为函数申明后面不能加()，变成函数表达式
+                console.log(i)  //error:i is not defined
+            }*/
+
+
+            //因此可以利用闭包解决循环中i的值的问题
+            /*  var arr = [];
+                for(var i = 0; i < 10; i++){
+                    arr.push(function() {
+                        console.log(i);
+                    });
+                }
+                console.log(arr[2]())  //10
+            */
+            //每次循环,arr中保存的都是function() {console.log(i)};函数调用时会寻找当前作用域中是否有i，没有去上级作用域中找。
+            //这里的i其实是对全局作用域中变量i的引用（js没有块级作用域）函数调用前循环已经结束，i=10。
+
+            //解决办法
+            /*  var arr = [];
+                for(var i = 0; i < 10; i++){
+                    (function(){
+                        var j = i;
+                        arr.push(function() {
+                            console.log(j);
+                        });
+                    })()
+                }
+                for(var i = 0; i < 10; i++){
+                    (function(j) {
+                        arr.push(function() {
+                            console.log(j);
+                        });
+                    })(i)
+                }
+                console.log(arr[2]())  //2
+            */
+            //利用匿名函数，相当于每次都创建了一个新的块级作用域，j是在块级作用域中声明的独立的变量,里面保存着这次循环的i的值而非引用。
+            //匿名函数执行完毕，j不会被销毁，因为里层闭包的作用域链中包含着（或着说是引用着）块级作用域中的j。
+            //函数调用时寻找当前作用域中是否有j，没有，在上级的块状作用域中找到了变量j的值,执行完毕后销毁当前的变量j.
+            //把i当成参数传进去同理(函数参数按值传递，参数相当于函数内部局部变量)。
+
+            //其他解决办法
+            //1.map循环 2.let声明3...
+
+        //总结下let声明作用
+            //1.块级作用域(原理用法参照es5匿名函数模仿会计作用域),循环外部无法访问
+                /*var arr = [];
+                for(let i = 0; i < 10; i++){
+                    arr.push(function() {
+                        console.log(i);
+                    });
+                }
+                console.log(arr[2]())  //2*/
+
+                /*
+                    ...
+                    {   此处语法错误，仅为形象说明...
+                        let i = 0;
+                        arr.push(function() {
+                            console.log(i);
+                        });
+                    }
+                    ...
+                */
+            
+            //2.不允许重复声明
+                /*function func (){
+                    let b=100;
+                    var b=10;
+                }
+
+                function add(num){
+                    let num;
+                    return num+1;
+                }
+
+                function another(){
+                    let a=10;
+                    let a=5;
+                }*/
+                //error: Identifier 'b'/‘num’/'a' has already been declared
+
+            //3.暂时性死区（不受外部声明影响，且不存在变量声明提升，无法先使用后声明）
+                /*console.log(tmp);   //undefined
+                var tmp = 123;
+                if (true) {
+                    //tmp = 'abc'; // Uncaught ReferenceError：temp is not defined
+                    let tmp;
+                }*/
+        
+        //this指向
+
+            //闭包中使用this对象：
+            /*  每个函数调用时都会自动获得两个特殊变量：this和arguments。
+             *  内部函数在搜索这两个变量时只会搜索到其活动对象为止，因此不能直接访问外部函数中的这两个活动变量。
+             *  解决办法：把外部作用域中的this对象保存在一个闭包能访问到的新变量里。例子省略。
+             */
+            //个别特殊情况
+            /*  var name = 'aaa';
+             *  var obj = {  
+             *          return this.name;
+             *      }
+             *  }
+             *  obj.getName(); //'obj1'
+             *  (obj.getName = obj.getName)()//’The Window‘
+             *  //赋值表达式返回的是函数本身，所以this的值不能得到维持（匿名函数的执行环境具有全局性）
+             */
     
 
     //Chapter 13
@@ -461,83 +627,91 @@
             动画/渐变: >= ie10*/
             
         //事件
-        //绑定&解绑
-            //1.addEventListener & removeEventListener（>=ie9）
-                //obj.addEventListener('click',handler,false);
-            //2.attachEvent & detachEvent (<=ie8)
-                /*obj.attachEvent('onclick',handler);
-                ie8 只支持事件冒泡，且时间处理程序会在全局作用域中运行(attachEvent方法添加的事件处理函数中this等于window)。
-                通过attachEvent添加多个事件，执行顺序和添加顺序相反*/
+            //绑定&解绑
+                //1.addEventListener & removeEventListener（>=ie9）
+                    //obj.addEventListener('click',handler,false);
+                //2.attachEvent & detachEvent (<=ie8)
+                    /*obj.attachEvent('onclick',handler);
+                    ie8 只支持事件冒泡，且时间处理程序会在全局作用域中运行(attachEvent方法添加的事件处理函数中this等于window)。
+                    通过attachEvent添加多个事件，执行顺序和添加顺序相反*/
 
-        //js阻止事件冒泡和默认行为
-        /*obj.onclick = function (ev){
-            var oEvent = ev || event;     //ie低版本event是挂在window上的
+            //js阻止事件冒泡和默认行为
+            /*obj.onclick = function (ev){
+                var oEvent = ev || event;     //ie低版本event是挂在window上的
 
-            //事件的实际发生对象
-            oEvent.target || oEvent.srcElement(ie专属 为啥不用this？ ie事件处理函数中this指向不同，所以用srcElement保险)
+                //事件的实际发生对象
+                oEvent.target || oEvent.srcElement(ie专属 为啥不用this？ ie事件处理函数中this指向不同，所以用srcElement保险)
 
-            //mouseover和mouseout事件的相关对象
-            oEvent.relatedTarget
-            fromElement | toElement    //ie
+                //mouseover和mouseout事件的相关对象
+                oEvent.relatedTarget
+                fromElement | toElement    //ie
 
-            //事件冒泡
-            oEvent.cancelBubble = true;   //ie
-            oEvent.stopPropagation();
+                //事件冒泡
+                oEvent.cancelBubble = true;   //ie
+                oEvent.stopPropagation();
 
-            //默认行为
-            oEvent.preventDefault(); 
-            return false;                //ie
-        }*/
-        //检测浏览器是否支持某个事件 document.implementation.hasFeature("","3.0");
-        //事件对象的兼容方法详见 PJ3 Page360
+                //默认行为
+                oEvent.preventDefault(); 
+                return false;                //ie
+            }*/
+            //检测浏览器是否支持某个事件 document.implementation.hasFeature("","3.0");
+            //事件对象的兼容方法详见 PJ3 Page360
 
 
     //Chapter 21
         //手写一个Ajax
-        /*function ajax(opt) {
-            opt = opt || {};
-            if(!opt.url) return;
-            opt.type = opt.type || 'get';
-            opt.data = opt.data || {};
-            opt.timeout = opt.timeout || 0;
-            //拼接url地址
-            var arr = [];
-            for(var key in opt.data){
-                arr.push(key + '=' + encodeURIComponent(opt.data[key]));
-            }
-            var sData = arr.join('&');
-            //创建ajax对象
-            if(window.XMLHttpRequest){
-                var xhr = new XMLHttpRequest();
-            }else {
-                var xhr = new ActiveXObject('MicrosoftXMLHttp');
-            }
-            //发送请求
-            if(opt.type == 'get'){
-                xhr.open('get',opt.url + '?' + sData,true);
-                xhr.send();
-            }else{
-                xhr.open('post',opt.url,true);
-                xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
-                xhr.send(sData);
-            }
-            //接收响应
-            xhr.onreadystatechange = function() {
-                if(xhr.readyState == 4) {
-                    if(xhr.status >= 200 && xhr.status < 300 || xhr.status = 304) {
-                        opt.success && opt.success(xhr.responseText);
-                    }else{
-                        opt.err && opt.err();
+            /*function ajax(opt) {
+                opt = opt || {};
+                if(!opt.url) return;
+                opt.type = opt.type || 'get';
+                opt.data = opt.data || {};
+                opt.timeout = opt.timeout || 0;
+                //拼接url地址
+                var arr = [];
+                for(var key in opt.data){
+                    arr.push(key + '=' + encodeURIComponent(opt.data[key]));
+                }
+                var sData = arr.join('&');
+                //创建ajax对象
+                if(window.XMLHttpRequest){
+                    var xhr = new XMLHttpRequest();
+                }else {
+                    var xhr = new ActiveXObject('MicrosoftXMLHttp');
+                }
+                //发送请求
+                if(opt.type == 'get'){
+                    xhr.open('get',opt.url + '?' + sData,true);
+                    xhr.send();
+                }else{
+                    xhr.open('post',opt.url,true);
+                    xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+                    xhr.send(sData);
+                }
+                //接收响应
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState == 4) {
+                        if(xhr.status >= 200 && xhr.status < 300 || xhr.status = 304) {
+                            opt.success && opt.success(xhr.responseText);
+                        }else{
+                            opt.err && opt.err();
+                        }
                     }
                 }
-            }
-            //响应超时
-            if(opt.timeout) {
-                setTimeout(function() {
-                    xhr.abort();
-                },opt.timeout);
-            }
-        }*/
+                //响应超时
+                if(opt.tim eout) {
+                    setTimeout(function() {
+                        xhr.abort();
+                    },opt.timeout);
+                }
+            }*/
+        
+        //webpack
+        //alert(typeof(NaN))
+        // Json对象  严格模式限制
+        //var a =[1,2,4,5,3];
+       
+        //arguments对象和数组区别
+
     </script>
 </body>
 </html>
